@@ -28,42 +28,45 @@ public class BootStrapData implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         Author eric = new Author("Eric","Evans");
+        Author rod = new Author("Rod","Johnson");
         Book ddd = new Book("Domain Driven Desing","1234fsd");
+        Book noEJD = new Book("blabla", "fdfse1212");
+
+        Publisher publisher1 = new Publisher();
+        publisher1.setName("Penguin");
+        publisher1.setAddress("CalleAndalucia");
+        publisher1.setCity("Malaga");
+        publisher1.setState("España");
+        publisher1.setZip("29631");
+
+        Publisher publisher2 = new Publisher();
+        publisher2.setName("Eco");
+        publisher2.setZip("84325");
 
         eric.getBooks().add(ddd);
         ddd.getAuthors().add(eric);
+        rod.getBooks().add(noEJD);
+        noEJD.getAuthors().add(rod);
 
         authorRepository.save(eric);
         bookRepository.save(ddd);
 
-        Author rod = new Author("Rod","Johnson");
-        Book noEJD = new Book("blabla", "fdfse1212");
-
-        rod.getBooks().add(noEJD);
-        noEJD.getAuthors().add(rod);
-
         authorRepository.save(rod);
         bookRepository.save(noEJD);
 
+        publisher1.getBooks().add(ddd);
+        publisherRepository.save(publisher1);
+
+        publisher1.getBooks().add(noEJD);
+        publisherRepository.save(publisher1);
+
+        publisherRepository.save(publisher2);
+
         System.out.println("Started in Bootstrap");
         System.out.println("Number of Books: " + bookRepository.count());
-
-        Publisher prueba1 = new Publisher();
-        prueba1.setName("Penguin");
-        prueba1.setAddress("CalleAndalucia");
-        prueba1.setCity("Malaga");
-        prueba1.setState("España");
-        prueba1.setZip("29631");
-
-        publisherRepository.save(prueba1);
-
-        Publisher prueba2 = new Publisher();
-        prueba2.setName("Eco");
-        prueba2.setZip("84325");
-
-        publisherRepository.save(prueba2);
-
         System.out.println("Number of Publishers: " + publisherRepository.count());
+        System.out.println("Number of books of Publisher1:" + publisher1.getBooks().size());
+
 
     }
 }
